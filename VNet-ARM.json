@@ -1,0 +1,63 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "addemvirt": {
+            "type": "string",
+            "minLength":3,
+            "maxLength":24,
+            "defaultValue": "[parameters('addemvirt')]",
+            "metadata": {
+            "description": "demvirtnetwrk"
+            }
+        },
+        "addemsub1": {
+            "type": "string",
+            "minLength":3,
+            "maxLength":24,
+            "defaultValue": "[parameters('addemsub1')]",
+            "metadata": {
+                "description": "demsubnetwrk1"
+            }
+        },
+        "addemsub2": {
+            "type": "string",
+            "minLength":3,
+            "maxLength":24,
+            "defaultValue": "[parameters('addemsub2')]",
+            "metadata": {
+                "description": "demsubnetwrk2"
+            }
+    }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [{
+        "name": "[parameters('addemvirt')]",
+        "type": "Microsoft.Network/virtualNetworks",
+        "apiVersion": "2020-11-01",
+        "location": "[resourceGroup().location]",
+        "properties": {
+            "addressSpace": {
+                "addressPrefixes": [
+                    "10.0.0.0/16"
+                ]
+            },
+            "subnets": [
+                {
+                    "name": "[parameters('addemsub1')]",
+                    "properties": {
+                        "addressPrefix": "10.0.0.0/24"
+                    }
+                },
+                {
+                    "name": "[parameters('addemsub2')]",
+                    "properties": {
+                        "addressPrefix": "10.0.1.0/24"
+                    }
+                }
+            ]
+        }
+    }],
+    "outputs": {}
+}
